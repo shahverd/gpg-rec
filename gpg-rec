@@ -1,0 +1,58 @@
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    gpg-rec is a shell script for encrypting/decrypting directories while
+#    keeping the structure. 
+#
+#    Usage: source gpg-rec enc
+#    usage: source gpg-rec dec YourGPGPassPhrase
+#
+#    Mostafa Shahverdy<hello@mostafa.info>, 20 Aug 2015
+#    http://www.mostafa.info
+
+
+ToEncPath="ToEnc"
+EncryptedPath="Encrypted"
+DecryptedPath="Decrypted"
+
+Recipient="secret@mostafa.info"
+
+IFS=$'\n';
+
+if [ "$1" == "enc" ]; then
+
+    for file in $(find $ToEncPath); do
+        if [ -f $file ]; then
+            echo  $file
+            mkdir -p "$EncryptedPath/$(dirname $file)"; 
+            gpg --batch --yes --output "$EncryptedPath/$file.asc" --encrypt  --recipient $Recipient $file
+        fi
+    done
+
+fi
+
+
+
+if [ "$1" == "dec" ]; then
+
+    Passphrase="$2"
+    for file in $(find $EncryptedPath); do
+        if [ -f $file ]; then
+            echo  $file
+            mkdir -p "$DecryptedPath/$(dirname $file)"; 
+            gpg --batch --yes --output "$DecryptedPath/${file%.asc}" --decrypt  --passphrase $Passphrase $file
+        fi
+    done
+
+fi
