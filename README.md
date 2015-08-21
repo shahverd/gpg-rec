@@ -5,9 +5,9 @@ Usage
 -----
 
      source gpg-rec enc
-     source gpg-rec dec YourGPGPassPhrase
+     source gpg-rec dec
 
 
 
-Mostafa Shahverdy<hello@mostafa.info>, 20 Aug 2015
+Mostafa Shahverdy <hello@mostafa.info>, 20 Aug 2015  
 http://www.mostafa.info

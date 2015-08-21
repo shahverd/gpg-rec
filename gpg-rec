@@ -20,7 +20,7 @@
 #
 #    Mostafa Shahverdy<hello@mostafa.info>, 20 Aug 2015
 #    http://www.mostafa.info
-
+#
 
 ToEncPath="ToEnc"
 EncryptedPath="Encrypted"
@@ -40,13 +40,9 @@ if [ "$1" == "enc" ]; then
         fi
     done
 
-fi
+elif [ "$1" == "dec" ]; then
 
-
-
-if [ "$1" == "dec" ]; then
-
-    Passphrase="$2"
+    read -p "Enter password: " -s Passphrase
     for file in $(find $EncryptedPath); do
         if [ -f $file ]; then
             echo  $file
